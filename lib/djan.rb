@@ -2,50 +2,53 @@
 
 require 'io/console'
 
+require 'colorato'
+
 
 module Djan
 
   VERSION = '1.0.0'
-end
-
-
-#    def to_djan(x, opts={})
-#
-#      out = StringIO.new
-#      out.set_encoding('UTF-8')
-#
-#      opts[:c] = Flor.colours(opts)
-#
-#      if [ :console, true ].include?(opts[:width])
-#        opts[:width] = IO.console.winsize[1] rescue 80
-#      #elsif opts[:width].is_a?(Integer)
-#        # let it go
-#      elsif mw = (opts[:mw] || opts[:maxwidth] || opts[:max_width])
-#        opts[:width] = [ (IO.console.winsize[1] rescue 80), mw ].min
-#      end
-#      opts[:indent] ||= 0 if opts[:width]
-#
-#      opts[:str_escape] ||= []
-#
-#      Djan.to_d(x, out, opts)
-#
-#      out.string
-#    end
-#
-#    alias to_d to_djan
-#
-#    # to_d, but without colours
-#    #
-#    def to_dnc(x)
-#
-#      to_d(x, colours: false)
-#    end
-
-module Djan
 
   extend self
 
-  def to_d(x, out, opts)
+  def to_djan(x, opts={})
+
+    out = StringIO.new
+    out.set_encoding('UTF-8')
+
+    opts[:c] =
+      opts[:colours] == false ||
+      opts[:colors] == false ||
+      opts[:colour] == false ||
+      opts[:color] == false ? Colorato.no_colours :
+      Colorato.colours
+
+    if [ :console, true ].include?(opts[:width])
+      opts[:width] = IO.console.winsize[1] rescue 80
+    #elsif opts[:width].is_a?(Integer)
+      # let it go
+    elsif mw = (opts[:mw] || opts[:maxwidth] || opts[:max_width])
+      opts[:width] = [ (IO.console.winsize[1] rescue 80), mw ].min
+    end
+    opts[:indent] ||= 0 if opts[:width]
+
+    opts[:str_escape] ||= []
+
+    to_dj(x, out, opts)
+
+    out.string
+  end
+
+  alias to_d to_djan
+
+  # to_d, but without colours
+  #
+  def to_dnc(x)
+
+    to_djan(x, colours: false)
+  end
+
+  def to_dj(x, out, opts)
 
     case x
     when nil then nil_to_d(x, out, opts)
@@ -60,10 +63,10 @@ module Djan
 
   def len(x, opts)
 
-    opts = opts.merge(c: Flor.no_colours, indent: nil, width: nil)
+    opts = opts.merge(c: Colorato.no_colours, indent: nil, width: nil)
     o = StringIO.new
 
-    to_d(x, o, opts)
+    to_dj(x, o, opts)
 
     o.string.length
   end
@@ -160,7 +163,7 @@ module Djan
       kt = key_max_len ? key_max_len - kl : nil
       r = newline_or_space(out, opts.merge(keytab: kt))
 
-      to_d(v, out, indent(opts, inc: 2, keytab: r == :newline ? kt : 1))
+      to_dj(v, out, indent(opts, inc: 2, keytab: r == :newline ? kt : 1))
 
       if ii < x.size - 1
         c_inf(',', out, opts)
@@ -188,7 +191,7 @@ module Djan
     end
 
     x.each_with_index do |e, i|
-      to_d(e, out, indent(opts, first: i == 0))
+      to_dj(e, out, indent(opts, first: i == 0))
       if i < x.size - 1
         c_inf(',', out, opts)
         newline_or_space(out, opts)

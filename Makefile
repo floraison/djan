@@ -40,6 +40,10 @@ test:
 	ruby test/_test.rb
 spec: test
 
+testv:
+	ruby test/_test.rb -v
+tv: testv
+
 
 ## specific to project ##
 

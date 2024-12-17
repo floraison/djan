@@ -6,6 +6,8 @@
 
 require 'minitest/autorun'
 
+$: << 'lib' unless $:.include?('lib'); require 'djan'
+
 
 #Dir['test/helpers/*_helper.rb'].each do |path|
 #  require(path)
