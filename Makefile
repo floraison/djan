@@ -33,9 +33,12 @@ build: gemspec_validate
 push: build
 	gem push --otp "$(OTP)" pkg/$(NAME)-$(VERSION).gem
 
-spec:
-	bundle exec rspec
-test: spec
+#spec:
+#	bundle exec rspec
+#test: spec
+test:
+	ruby test/_test.rb
+spec: test
 
 
 ## specific to project ##
@@ -43,5 +46,5 @@ test: spec
 # nothing
 
 
-.PHONY: count_lines scan gemspec_validate name cw build push spec
+.PHONY: count_lines scan gemspec_validate name cw build push spec test
 
