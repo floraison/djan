@@ -40,9 +40,9 @@ Pretty pretting for floraison and flor.
   #s.add_runtime_dependency 'tzinfo'
     # this dependency appears in 'et-orbi'
 
-  s.add_runtime_dependency 'colorator'
+  s.add_runtime_dependency 'colorato', '~> 1.0'
 
-  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rspec', '~> 3.0'
 
   s.require_path = 'lib'
 end

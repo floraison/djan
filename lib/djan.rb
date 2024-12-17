@@ -3,6 +3,12 @@
 require 'io/console'
 
 
+module Djan
+
+  VERSION = '1.0.0'
+end
+
+
 #    def to_djan(x, opts={})
 #
 #      out = StringIO.new
