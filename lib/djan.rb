@@ -158,7 +158,7 @@ module Djan
 
     x.each_with_index do |(k, v), ii|
 
-      kl = string_to_d(k, out, indent(opts, first: ii == 0))
+      kl = key_string_to_d(k, out, indent(opts, first: ii == 0))
       c_inf(':', out, opts)
 
       kt = key_max_len ? key_max_len - kl : nil
@@ -212,6 +212,7 @@ module Djan
 
     if (
       opts[:json] ||
+      (opts[:quote] && ( ! opts[:_k])) ||
       x.match(/\A[^: \b\f\n\r\t"',()\[\]{}#\\+%\/><^!=-]+\z/) == nil ||
       x.to_i.to_s == x ||
       x.to_f.to_s == x ||
@@ -219,11 +220,17 @@ module Djan
     ) then
       s = x.inspect
       c_str(s, out, opts)
+      opts.delete(:_k)
       s.length
     else
       c_str(x, out, opts)
       x.length
     end
+  end
+
+  def key_string_to_d(x, out, opts)
+
+    string_to_d(x, out, opts.merge(_k: true))
   end
 
   def boolean_to_d(x, out, opts)
