@@ -11,11 +11,12 @@ pkg/
 .ruby-version
 #.rspec
 
-.errors
-.rspec.out
-
-.bxsinfo.yaml
-.bxsenvs.yaml
+#.errors
+#.rspec.out
+#.bxsinfo.yaml
+#.bxsenvs.yaml
+.proba-output.rb
+.test-point
 
 .todo.md
 
