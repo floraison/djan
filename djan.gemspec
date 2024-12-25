@@ -42,7 +42,7 @@ Pretty pretting for floraison and flor.
 
   s.add_runtime_dependency 'colorato', '~> 1.0'
 
-  s.add_development_dependency 'minitest', '~> 5.0'
+  s.add_development_dependency 'probatio', '~> 1.0'
 
   s.require_path = 'lib'
 end
