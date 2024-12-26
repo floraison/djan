@@ -36,6 +36,7 @@ push: build
 test:
 	bundle exec proba
 spec: test
+t: test
 
 testv:
 	bundle exec proba -d

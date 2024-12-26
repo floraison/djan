@@ -44,9 +44,9 @@ module Djan
 
   # to_d, but without colours
   #
-  def to_dnc(x)
+  def to_dnc(x, opts={})
 
-    to_djan(x, colours: false)
+    to_djan(x, opts.merge(colours: false))
   end
 
   def to_dj(x, out, opts)

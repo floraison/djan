@@ -59,5 +59,18 @@ group 'djan' do
       assert(v, s)
     end
   end
+
+  test "option :width" do
+
+    a = 2.times.map { |i| "a#{i}" * 10 }
+
+    s = Djan.to_dnc(a, width: 80)
+
+    assert s, "[ a0a0a0a0a0a0a0a0a0a0, a1a1a1a1a1a1a1a1a1a1 ]"
+
+    s = Djan.to_dnc(a, width: 40)
+
+    assert s, "[ a0a0a0a0a0a0a0a0a0a0,\n  a1a1a1a1a1a1a1a1a1a1 ]"
+  end
 end
 
