@@ -9,12 +9,7 @@ Pretty pretting for floraison and flor. A bit loose like JS and YAML.
 Meant for readable output, not for input.
 
 ```ruby
-require 'djan'
-
-Djan.to_dnc("papa tango charly")
-  # --> "papa tango charly"
-Djan.to_dnc({:a=>"abc"})
-  # --> { a: abc }
+READ ! bundle exec ruby src/readme0.rb
 ```
 
 
