@@ -17,60 +17,53 @@ group 'djan' do
       s)
   end
 
-  {
+  group 'defaults to colour' do
 
-    [] =>
-      "\e[90m[]\e[0;0m",
-    [ 1, 2, 3 ] =>
-      "\e[90m[\e[0;0m \e[94m1\e[0;0m\e[90m,\e[0;0m \e[94m2\e[0;0m\e[90m,\e[0;0m \e[94m3\e[0;0m \e[90m]\e[0;0m",
-    {} =>
-      "\e[90m{}\e[0;0m",
-    { a: 1 } =>
-      "\e[90m{\e[0;0m \e[33ma\e[0;0m\e[90m:\e[0;0m \e[94m1\e[0;0m \e[90m}\e[0;0m",
-    { 'a' => 'alpha' } =>
-      "\e[90m{\e[0;0m \e[33ma\e[0;0m\e[90m:\e[0;0m \e[33malpha\e[0;0m \e[90m}\e[0;0m",
+    {
 
-  }.to_a.each_with_index do |(k, v), i|
+      [] =>
+        "\e[90m[]\e[0;0m",
+      [ 1, 2, 3 ] =>
+        "\e[90m[\e[0;0m \e[94m1\e[0;0m\e[90m,\e[0;0m \e[94m2\e[0;0m\e[90m,\e[0;0m \e[94m3\e[0;0m \e[90m]\e[0;0m",
+      {} =>
+        "\e[90m{}\e[0;0m",
+      { a: 1 } =>
+        "\e[90m{\e[0;0m \e[33ma\e[0;0m\e[90m:\e[0;0m \e[94m1\e[0;0m \e[90m}\e[0;0m",
+      { 'a' => 'alpha' } =>
+        "\e[90m{\e[0;0m \e[33ma\e[0;0m\e[90m:\e[0;0m \e[33malpha\e[0;0m \e[90m}\e[0;0m",
 
-    test "djan_colour_#{i}" do
+    }.to_a.each do |k, v|
 
-      s = Djan.to_d(k)
-      #p k; puts s; p s
+      test k.inspect do
 
-      assert(v, s)
+        s = Djan.to_d(k)
+        #p k; puts s; p s
+
+        assert(v, s)
+      end
     end
   end
 
-  {
+  group '.to_dnc(x)' do
 
-    [] => "[]",
-    [ 1, 2, 3 ] => "[ 1, 2, 3 ]",
-    {} => "{}",
-    { a: 1 } => "{ a: 1 }",
-    { 'a' => 'alpha' } => "{ a: alpha }",
+    {
 
-  }.to_a.each_with_index do |(k, v), i|
+      [] => "[]",
+      [ 1, 2, 3 ] => "[ 1, 2, 3 ]",
+      {} => "{}",
+      { a: 1 } => "{ a: 1 }",
+      { 'a' => 'alpha' } => "{ a: alpha }",
 
-    test "djan_no_colour_#{i}" do
+    }.to_a.each do |k, v|
 
-      s = Djan.to_dnc(k)
-      #p k; puts s; p s
+      test k.inspect do
 
-      assert(v, s)
+        s = Djan.to_dnc(k)
+        #p k; puts s; p s
+
+        assert(v, s)
+      end
     end
-  end
-
-  test 'option :width' do
-
-    a = 2.times.map { |i| "a#{i}" * 10 }
-
-    s = Djan.to_dnc(a, width: 80)
-
-    assert s, "[ a0a0a0a0a0a0a0a0a0a0, a1a1a1a1a1a1a1a1a1a1 ]"
-
-    s = Djan.to_dnc(a, width: 40)
-
-    assert s, "[ a0a0a0a0a0a0a0a0a0a0,\n  a1a1a1a1a1a1a1a1a1a1 ]"
   end
 
   group 'option :json' do
@@ -107,6 +100,19 @@ group 'djan' do
         assert Djan.to_dnc(k, quote: true), v1
       end
     end
+  end
+
+  test 'option :width' do
+
+    a = 2.times.map { |i| "a#{i}" * 10 }
+
+    s = Djan.to_dnc(a, width: 80)
+
+    assert s, "[ a0a0a0a0a0a0a0a0a0a0, a1a1a1a1a1a1a1a1a1a1 ]"
+
+    s = Djan.to_dnc(a, width: 40)
+
+    assert s, "[ a0a0a0a0a0a0a0a0a0a0,\n  a1a1a1a1a1a1a1a1a1a1 ]"
   end
 end
 
