@@ -60,7 +60,7 @@ group 'djan' do
     end
   end
 
-  test "option :width" do
+  test 'option :width' do
 
     a = 2.times.map { |i| "a#{i}" * 10 }
 
@@ -71,6 +71,42 @@ group 'djan' do
     s = Djan.to_dnc(a, width: 40)
 
     assert s, "[ a0a0a0a0a0a0a0a0a0a0,\n  a1a1a1a1a1a1a1a1a1a1 ]"
+  end
+
+  group 'option :json' do
+
+    {
+
+      "abcd" => [ 'abcd', "\"abcd\"" ],
+      { "a" => 1 } => [ '{ a: 1 }', '{ "a": 1 }' ],
+      { "a" => "alpha" } => [ '{ a: alpha }', '{ "a": "alpha" }' ],
+
+    }.each do |k, (v0, v1)|
+
+      test "#{k.inspect} --> #{v1}" do
+
+        assert Djan.to_dnc(k), v0
+        assert Djan.to_dnc(k, json: true), v1
+      end
+    end
+  end
+
+  group 'option :quote' do
+
+    {
+
+      "abcd" => [ 'abcd', "\"abcd\"" ],
+      { "a" => 1 } => [ '{ a: 1 }', '{ a: 1 }' ],
+      { "a" => "alpha" } => [ '{ a: alpha }', '{ a: "alpha" }' ],
+
+    }.each do |k, (v0, v1)|
+
+      test "#{k.inspect} --> #{v1}" do
+
+        assert Djan.to_dnc(k), v0
+        assert Djan.to_dnc(k, quote: true), v1
+      end
+    end
   end
 end
 
