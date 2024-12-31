@@ -114,5 +114,11 @@ group 'djan' do
 
     assert s, "[ a0a0a0a0a0a0a0a0a0a0,\n  a1a1a1a1a1a1a1a1a1a1 ]"
   end
+
+  test 'digit strings' do
+
+    assert Djan.d('0000') => '"0000"'
+    assert Djan.d('1111') => '"1111"'
+  end
 end
 

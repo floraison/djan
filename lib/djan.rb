@@ -49,6 +49,10 @@ module Djan
       to_djan(x, opts.merge(colours: false))
     end
 
+    alias d to_dnc
+    alias dc to_djan
+      # short and to the point...
+
     protected
 
     def to_dj(x, out, opts)
@@ -216,7 +220,7 @@ module Djan
         opts[:json] ||
         (opts[:quote] && ( ! opts[:_k])) ||
         x.match(/\A[^: \b\f\n\r\t"',()\[\]{}#\\+%\/><^!=-]+\z/) == nil ||
-        x.to_i.to_s == x ||
+        x.match(/\A\d+\z/) ||
         x.to_f.to_s == x ||
         opts[:str_escape].include?(x)
       ) then
