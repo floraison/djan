@@ -15,7 +15,7 @@ pkg/
 #.rspec.out
 #.bxsinfo.yaml
 #.bxsenvs.yaml
-.proba-output.rb
+.probatio-output.rb
 .test-point
 
 .todo.md
